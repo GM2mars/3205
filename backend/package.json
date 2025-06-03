@@ -1,0 +1,17 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "bun --watch index.js",
+    "start": "bun index.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.8.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.2",
+    "prisma": "^6.8.0"
+  }
+}
