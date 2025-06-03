@@ -5,7 +5,7 @@ interface MainActions {
   setAlias: (alias: string) => void;
   setExpiresAt: (expiresAt: Date | null) => void;
   setUrl: (originalUrl: string) => void;
-  checkAlias: (alias: string) => Promise<void>;
+  checkAlias: (alias: string) => Promise<{ isUnique: boolean }>;
   cutUrl: () => Promise<void>;
 };
 
@@ -35,17 +35,28 @@ const useMainStore = create<MainState>((set, get) => ({
     setExpiresAt: (expiresAt: Date | null) => set({ expiresAt }),
 
     checkAlias: async (alias: string) => {
-      const response = await fetch(`/api/alias/check/${alias}`).then(res => res.json());
-      console.log("checkAlias", response);
+      return await q.get(`http://localhost:3001/alias/${alias}`);
     },
 
     cutUrl: async () => {
       const { originalUrl, alias, expiresAt } = get();
+
       set({ loading: true, error: null });
 
-      const response = await q.post('http://localhost:3001/shorten', { originalUrl, expiresAt, alias });
+      if (alias) {
+        const { isUnique } = await get().actions.checkAlias(alias);
 
+        if (!isUnique) {
+          set({ error: 'Alias is already taken' });
+          set({ loading: false });
+          return;
+        }
+      }
+
+      const response = await q.post('http://localhost:3001/shorten', { originalUrl, expiresAt, alias });
       console.log(response);
+
+      set({ loading: false });
     },
   }
 }));

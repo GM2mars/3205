@@ -144,6 +144,14 @@ class LinkService {
     //   where: { alias },
     // });
   }
+
+  async checkAlias(alias: string): Promise<boolean> {
+    const link = await prisma.link.findUnique({
+      where: { alias }
+    });
+
+    return Boolean(link);
+  }
 }
 
 export const linkService = new LinkService();

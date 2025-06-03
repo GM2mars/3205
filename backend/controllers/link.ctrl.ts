@@ -79,6 +79,17 @@ class LinkController {
       res.status(404).json({ error: 'Link not found' });
     }
   }
+
+  async checkAlias(req: Request, res: Response) {
+    try {
+      const { alias } = req.params;
+      const hasAlias = await linkService.checkAlias(alias);
+
+      res.status(200).json({ isUnique: !hasAlias });
+    } catch (error) {
+      res.status(404).json({ error: 'Link not found' });
+    }
+  }
 };
 
 export const linkController = new LinkController();

@@ -7,6 +7,8 @@ const router: Router = Router();
 
 router.post('/shorten', validateUrl as any, linkController.getShortenedLink.bind(linkController) as any);
 
+router.get('/alias/:alias', linkController.checkAlias.bind(linkController) as any);
+
 router.get('/links', linkController.getAllLinks.bind(linkController) as any);
 
 router.get('/info/:alias', linkController.getLinkInfo.bind(linkController) as any);

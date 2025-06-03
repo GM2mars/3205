@@ -34,7 +34,7 @@ export const Input = () => {
 
         <label className="input input-lg w-60 ">
           <span className="label"><AtSign /></span>
-          <input type="text" placeholder="Alias" onChange={e => setAlias(e.target.value)} />
+          <input type="text" placeholder="Alias" onChange={e => setAlias(e.target.value)} maxLength={20} />
         </label>
 
         <label className="input input-lg w-44 ">

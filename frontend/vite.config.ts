@@ -9,11 +9,11 @@ export default defineConfig({
     tailwindcss()
   ],
   server: {
-    host: '0.0.0.0', // Важно для Docker
+    host: '0.0.0.0',
     port: 3000,
     strictPort: true,
     watch: {
-      usePolling: true, // Для корректной работы hot reload в Docker
+      usePolling: true,
     },
   },
   resolve: {
@@ -21,14 +21,5 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  // Опционально: настройка для проксирования API в dev режиме
-  // server: {
-  //   proxy: {
-  //     '/api': {
-  //       target: 'http://backend:3001',
-  //       changeOrigin: true,
-  //       rewrite: (path) => path.replace(/^\/api/, '')
-  //     }
-  //   }
-  // }
+
 })
