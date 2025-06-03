@@ -5,6 +5,8 @@ import { useLinks, useLinksActions } from "../Links.state";
 import { InfoModal } from "./InfoModal";
 import { StatModal } from "./StatModal";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const List = () => {
   const {
     getAllLinks,
@@ -31,7 +33,7 @@ export const List = () => {
       <ul className="flex flex-col gap-2 w-full">
         {links.map(link => (
           <li key={link.id} className="flex items-center gap-2 hover:bg-white/10 p-2 rounded-md transition-colors">
-            <a href={`http://localhost:3001/${link.alias}`} target="_blank" className="flex-1 text-3xl">{link.alias}</a>
+            <a href={`${API_URL}/${link.alias}`} target="_blank" className="flex-1 text-3xl">{link.alias}</a>
             <button className="btn btn-sm btn-info" onClick={() => showStatHandler(link.alias)} type="button">
               <ChartNoAxesCombined />
               <span className="uppercase">statistics</span>

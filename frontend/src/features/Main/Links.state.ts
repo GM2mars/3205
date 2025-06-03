@@ -2,6 +2,8 @@ import { create } from "zustand";
 
 import { q } from "@/utils";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 interface LinksActions {
   getAllLinks: () => Promise<void>;
   getInfo: (shortUrl: string) => Promise<void>;
@@ -25,7 +27,7 @@ const useLinksStore = create<LinksState>((set, get) => ({
 
   actions: {
     getAllLinks: async () => {
-      const links = await q.get('http://localhost:3001/links');
+      const links = await q.get(`${API_URL}/links`);
       set({ links });
     },
 
@@ -33,7 +35,7 @@ const useLinksStore = create<LinksState>((set, get) => ({
       const link = get().links.find(l => l.alias === alias);
 
       if (!link?.info) {
-        const info = await q.get(`http://localhost:3001/info/${alias}`);
+        const info = await q.get(`${API_URL}/info/${alias}`);
 
         set(state => ({
           links: state.links.map(l => l.id === link.id ? { ...l, info } : l),
@@ -52,7 +54,7 @@ const useLinksStore = create<LinksState>((set, get) => ({
       const link = get().links.find(l => l.alias === alias);
 
       if (!link?.stat) {
-        const stat = await q.get(`http://localhost:3001/analytics/${alias}`);
+        const stat = await q.get(`${API_URL}/analytics/${alias}`);
 
         set(state => ({
           links: state.links.map(l => l.id === link.id ? { ...l, stat } : l),
@@ -68,7 +70,7 @@ const useLinksStore = create<LinksState>((set, get) => ({
     },
 
     deleteLink: async (alias: string) => {
-      await q.delete(`http://localhost:3001/delete/${alias}`);
+      await q.delete(`${API_URL}/delete/${alias}`);
 
       set(state => ({
         links: state.links.filter(link => link.alias !== alias),

@@ -16,7 +16,7 @@ class LinkController {
     try {
       const data = req.body;
       const shortenedLink = await linkService.getShortenedLink(data);
-      const shortenedUrl = `${process.env.BASE_HOST}/${shortenedLink}`;
+      const shortenedUrl = `${process.env.BACKEND_HOST}/${shortenedLink}`;
 
       res.status(200).json({ shortenedUrl });
     } catch (error) {
@@ -33,13 +33,13 @@ class LinkController {
 
       await this.addStatistics(link.id, req.ip);
 
-      res.redirect(link.url)
+      res.redirect(link.url);
     } catch (error) {
       res.status(404).json({ error: 'Link not found' });
     }
   }
 
-  private async addStatistics(id: string, ip: string) {
+  async addStatistics(id: string, ip: string) {
     try {
       await linkService.addStatistics(id, ip);
     } catch (error) {

@@ -1,19 +1,16 @@
-FROM oven/bun:1.2-alpine AS base
+FROM oven/bun:1.2-alpine
 
 WORKDIR /app
 
-# === AUTHJS ===
-ARG SECRET_ACCESS
-ENV SECRET_ACCESS=$SECRET_ACCESS
+COPY package.json ./
+COPY bun.lockb* ./
 
-ENV NODE_ENV=production
-
+RUN bun install
 
 COPY . .
 
-RUN bun install --frozen-lockfile
 RUN bunx prisma generate
 
-EXPOSE 8080
+EXPOSE 3001
 
-CMD ["bun", "run", "index.ts"]
+CMD ["bun", "run", "start", "--host", "0.0.0.0"]

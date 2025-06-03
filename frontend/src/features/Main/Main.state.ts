@@ -1,5 +1,8 @@
+const API_URL = import.meta.env.VITE_API_URL;
+
 import { q } from "@/utils";
 import { create } from "zustand";
+
 
 interface MainActions {
   setAlias: (alias: string) => void;
@@ -35,7 +38,7 @@ const useMainStore = create<MainState>((set, get) => ({
     setExpiresAt: (expiresAt: Date | null) => set({ expiresAt }),
 
     checkAlias: async (alias: string) => {
-      return await q.get(`http://localhost:3001/alias/${alias}`);
+      return await q.get(`${API_URL}/alias/${alias}`);
     },
 
     cutUrl: async () => {
@@ -53,7 +56,7 @@ const useMainStore = create<MainState>((set, get) => ({
         }
       }
 
-      const response = await q.post('http://localhost:3001/shorten', { originalUrl, expiresAt, alias });
+      const response = await q.post(`${API_URL}/shorten`, { originalUrl, expiresAt, alias });
       console.log(response);
 
       set({ loading: false });

@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "bun --watch index.js",
-    "start": "bun index.js"
+    "start": "bun index.js",
+    "test": "vitest"
   },
   "dependencies": {
     "@prisma/client": "^6.8.0",
@@ -12,6 +13,8 @@
   },
   "devDependencies": {
     "@types/express": "^5.0.2",
-    "prisma": "^6.8.0"
+    "prisma": "^6.8.0",
+    "supertest": "^7.1.1",
+    "vitest": "^3.2.1"
   }
 }
